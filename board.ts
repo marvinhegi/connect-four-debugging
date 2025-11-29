@@ -1,6 +1,7 @@
-const PLAYER_1: string = "x";
-const PLAYER_2: string = "o";
-const EMPTY: string = "_";
+export const PLAYER_1: string = "x";
+export const PLAYER_2: string = "o";
+export const EMPTY: string = "_";
+
 const ROWS: number = 6;
 const COLS: number = 7;
 const CONNECT_N: number = 4;
@@ -46,7 +47,7 @@ export class Board {
     return -1;
   }
 
-  public Winner(player: string, row: number, col: number): string {
+  public winner(player: string, row: number, col: number): string {
     const horizontal = this.horizontalWinner(player, row);
     if (horizontal != EMPTY) {
       return horizontal;
@@ -55,13 +56,16 @@ export class Board {
     if (vertical != EMPTY) {
       return vertical;
     }
-    // TODO diagonal
+    const diagonal = this.diagonalWinner(player, row, col);
+    if (diagonal != EMPTY) {
+      return diagonal;
+    }
     return EMPTY;
   }
 
   private verticalWinner(player: string, r: number): string {
     const col = this.getCol(r);
-    const win = "x".repeat(CONNECT_N);
+    const win = player.repeat(CONNECT_N);
     if (col.join("").includes(win)) {
       return player;
     }
@@ -70,8 +74,17 @@ export class Board {
 
   private horizontalWinner(player: string, r: number): string {
     const row = this.getRow(r);
-    const win = "x".repeat(CONNECT_N);
+    const win = player.repeat(CONNECT_N);
     if (row.join("").includes(win)) {
+      return player;
+    }
+    return EMPTY;
+  }
+
+  private diagonalWinner(player: string, r: number, c: number): string {
+    const [diagUp, diagDown] = this.getDiagonals(r, c);
+    const win = player.repeat(CONNECT_N);
+    if (diagUp.includes(win) || diagDown.includes(win)) {
       return player;
     }
     return EMPTY;
@@ -91,5 +104,28 @@ export class Board {
       col[i] = this.fields[i][c];
     }
     return col;
+  }
+
+  private getDiagonals(r: number, c: number): [string, string] {
+    // Woe to thee, who entered here, for you dug too deep and unearthed daemons of the otherworld!
+    const rising: Array<string> = [];
+    const falling: Array<string> = [];
+    for (let i = r, j = c; i >= 0 && j < this.fields[0].length; i--, j++) {
+      rising.push(this.fields[i][j]);
+    }
+    for (let i = r, j = c; i < this.fields.length && j >= 0; i++, j--) {
+      rising.push(this.fields[i][j]);
+    }
+    for (
+      let i = r, j = c;
+      i < this.fields.length && j < this.fields[0].length;
+      i++, j++
+    ) {
+      falling.push(this.fields[i][j]);
+    }
+    for (let i = r, j = c; i >= 0 && j >= 0; i--, j--) {
+      falling.push(this.fields[i][i]);
+    }
+    return [rising.join(""), falling.join("")];
   }
 }
