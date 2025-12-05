@@ -12,6 +12,7 @@ Die Eingabe wird nicht validiert.
 
 
 ### Spielbrett
+```
 0 1 2 3 4 5 6
 _ _ _ _ _ _ _
 _ _ _ _ _ _ _
@@ -20,7 +21,7 @@ _ _ _ _ _ _ _
 _ _ _ _ _ _ _
 _ _ _ _ _ _ _
 Player x: x
-
+```
 
 
 
@@ -38,7 +39,7 @@ Das Programm stürzt ab, wenn eine Spalte komplett gefüllt ist und der Spieler 
 
 
 ### Spielbrett bnach 6 eingaben vor absturz
-
+```
 0 1 2 3 4 5 6
 _ _ _ x _ _ _
 _ _ _ o _ _ _
@@ -47,7 +48,7 @@ _ _ _ o _ _ _
 _ _ _ x _ _ _
 _ _ _ o _ _ _
 
-
+```
 
 
 
@@ -71,8 +72,9 @@ Beim Versuch, einen diagonalen Gewinn zu erzielen (z.B. vier Steine in einer Dia
 
 ### Eingabe
 1. Spiel starten: `deno run main.ts`
-2. 0, 0, 0, 0, 1, 1, 2, 1, 6, 3, 6, 2
+2. diese Schritte ausführen: 0, 0, 0, 0, 1, 1, 2, 1, 6, 3, 6, 2
 ### Spielbrett 
+```
 0 1 2 3 4 5 6
 _ _ _ _ _ _ _
 _ _ _ _ _ _ _
@@ -80,29 +82,4 @@ o _ _ _ _ _ _
 x o _ _ _ _ _
 o o o _ _ _ x
 x x x o _ _ x
-
-
-
-
-
-
-
-
-
-
-### Korrekte Implementierung
-```typescript
-for (let i = r, j = c; i >= 0 && j >= 0; i--, j--) {
-  falling.push(this.fields[i][j]);  // KORREKTUR: [i][j] statt [i][i]
-}
-```
-
-### 
-In der Schleife wird `this.fields[i][i]` verwendet statt `this.fields[i][j]`.
-### Lokation
-`board.ts`, Zeilen 125-126:
-```typescript
-for (let i = r, j = c; i >= 0 && j >= 0; i--, j--) {
-  falling.push(this.fields[i][i]);  // BUG: sollte this.fields[i][j] sein
-}
 ```
