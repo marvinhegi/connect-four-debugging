@@ -123,7 +123,7 @@ export class Board {
       falling.push(this.fields[i][j]);
     }
     for (let i = r, j = c; i >= 0 && j >= 0; i--, j--) {
-      falling.push(this.fields[i][i]);
+      falling.push(this.fields[i][j]);
     }
     return [rising.join(""), falling.join("")];
   }

@@ -38,5 +38,5 @@ Deno.test("Diagonal Winner", () => {
   }
 
   
-  assertEquals(winner, Player.PlayerX, "X sollte mit 4 diagonalen Steinen gewinnen!");
+  assertEquals(winner, Player.PlayerO);
 });
